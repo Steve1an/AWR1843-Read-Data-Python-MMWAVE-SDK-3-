@@ -1,10 +1,10 @@
 clearvars; close all
 delete(instrfind);
 
-N = 100;
+N = 200;
 
 % Setup radar with the parameters from the configuration file
-configFile = "AWR1843config.cfg";
+configFile = "D:\steve\Chromdownloads\profile.cfg";
 [DATA_sphandle,UART_sphandle, ConfigParameters] = radarSetup18XX(configFile);
 
 %% Initialize the figure

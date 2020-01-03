@@ -5,14 +5,14 @@ function [DATA_sphandle,UART_sphandle, ConfigParameters] = radarSetup18XX(config
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%% UART COM PORT:
-comPortString = 'COM4';
+comPortString = 'COM13';
 UART_sphandle = serial(comPortString,'BaudRate',115200);
 set(UART_sphandle,'Parity','none')
 set(UART_sphandle,'Terminator','LF')
 fopen(UART_sphandle);
 
 %%%% DATA COM PORT:
-comPortString = 'COM5';
+comPortString = 'COM14';
 DATA_sphandle = serial(comPortString,'BaudRate',921600);
 set(DATA_sphandle,'Terminator', '');
 set(DATA_sphandle,'InputBufferSize', 65536);
@@ -27,8 +27,7 @@ fopen(DATA_sphandle);
 %%%%%%%%%%        READ CONFIGURATION FILE         %%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
-% configfile = "C:\Users\ibaig\Desktop\Carpeta comp\OneDrive\PHD\Radar\slowProfile.cfg";
+%configfile = "D:\steve\Chromdownloads\profile.cfg";
 config = cell(1,100);
 fid = fopen(configfile, 'r');
 if fid == -1
