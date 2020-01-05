@@ -20,10 +20,10 @@ connect(deviceObj);
 
 
 
-N = 200;
+N = 500;
 
 % Setup radar with the parameters from the configuration file
-configFile = "D:\steve\Chromdownloads\profile.cfg";
+configFile = "profile.cfg";
 [DATA_sphandle,UART_sphandle, ConfigParameters] = radarSetup18XX(configFile);
 
 %% Initialize the figure
@@ -53,7 +53,7 @@ prevCentroidPos = nan(1,6);
 shoeSize = 26.5/100; % 26.5 cm
 
 tic
-while (myInd <= N)
+while (1)
     dataOk = 0;
     timeNow = toc;
     elapsedTime = timeNow - lastreadTime;
@@ -72,7 +72,7 @@ while (myInd <= N)
         h.YData = detObj.y;
         drawnow limitrate;
         pause(0.05);
-        if (detObj.numObj>1)
+        if (detObj.numObj>0)
             invoke(deviceObj,'beep')
         end
         myInd = myInd + 1;     
@@ -86,7 +86,6 @@ while (myInd <= N)
 end
 fprintf(UART_sphandle, 'sensorStop');
 delete(instrfind);
-disconnect(deviceObj);
 close all
         
 
