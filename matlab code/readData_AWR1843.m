@@ -23,20 +23,20 @@ connect(deviceObj);
 N = 500;
 
 % Setup radar with the parameters from the configuration file
-configFile = "profile.cfg";
+configFile = "profile_no_grouping_and_static_removal.cfg";
 [DATA_sphandle,UART_sphandle, ConfigParameters] = radarSetup18XX(configFile);
 
-%% Initialize the figure
-figure;
-set(gcf, 'Position', get(0, 'Screensize'));
-H = uicontrol('Style', 'PushButton', ...
-                    'String', 'Stop', ...
-                    'Callback', 'stopVal = 1','Position',[100 600 100 30]);
-h = scatter([],[],'filled');
-axis([-0.5,0.5,0,1.5]);
-% axis([-0.5,0.5,0,0.9]);
-xlabel('X (m)'); ylabel('Y (m)');
-grid minor
+% %% Initialize the figure
+% figure;
+% set(gcf, 'Position', get(0, 'Screensize'));
+% H = uicontrol('Style', 'PushButton', ...
+%                     'String', 'Stop', ...
+%                     'Callback', 'stopVal = 1','Position',[100 600 100 30]);
+% h = scatter([],[],'filled');
+% axis([-0.5,0.5,0,1.5]);
+% % axis([-0.5,0.5,0,0.9]);
+% xlabel('X (m)'); ylabel('Y (m)');
+% grid minor
 
 %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%&&&&%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -67,13 +67,19 @@ while (1)
         % Store all the data from the radar
         frame{myInd} = detObj;
         
-        % Plot the radar points
-        h.XData = -detObj.x;
-        h.YData = detObj.y;
-        drawnow limitrate;
-        pause(0.05);
+%         % Plot the radar points
+%         h.XData = -detObj.x;
+%         h.YData = detObj.y;
+        
+%        drawnow limitrate;
+        pause(0.1);
+        
         if (detObj.numObj>0)
-            invoke(deviceObj,'beep')
+            distance=sqrt((detObj.x).^2+(detObj.y).^2+(detObj.z).^2);
+            fod=find(distance>0.6&distance<1);
+            if (size(fod,2)>0)
+                invoke(deviceObj,'beep');
+            end
         end
         myInd = myInd + 1;     
     end
